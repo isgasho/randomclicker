@@ -3,6 +3,7 @@ package game
 import (
 	"github.com/hajimehoshi/ebiten"
 	"math/big"
+	"randomclicker/data"
 	"time"
 )
 
@@ -13,6 +14,7 @@ type Game struct {
 	TickerDone       chan bool
 	ModifierPerClick big.Float
 	IncomeModifier   big.Float
+	WindowState      data.WindowState
 }
 
 func NewGame() *Game {

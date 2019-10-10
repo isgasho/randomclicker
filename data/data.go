@@ -15,6 +15,13 @@ var (
 	BigFont    font.Face
 )
 
+type WindowState int
+
+const (
+	Clicking WindowState = iota
+	Menu
+)
+
 func init() {
 
 	tt, err := truetype.Parse(fonts.MPlus1pRegular_ttf)

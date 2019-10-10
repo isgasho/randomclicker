@@ -14,6 +14,7 @@ var mouseDown = false
 func (g *Game) Hook() error {
 
 	g.hookMouseClick()
+	g.hookA()
 	if err := g.hookEsc(); err != nil {
 		return err
 	}
@@ -60,4 +61,12 @@ func (g *Game) hookEsc() error {
 	}
 	return nil
 
+}
+
+func (g *Game) hookA() {
+
+
+	if ebiten.IsKeyPressed(ebiten.KeyA) {
+		g.Menu()
+	}
 }
