@@ -36,8 +36,10 @@ func (g *Game) Menu() {
 	}
 
 	if g.WindowState == data.Menu {
+		g.WindowState = data.Clicking
 		g.Screen = clicking
 	} else if g.WindowState == data.Clicking {
+		g.WindowState = data.Menu
 		g.Screen = menu
 	}
 }

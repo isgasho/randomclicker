@@ -22,5 +22,6 @@ func NewGame() *Game {
 		ModifierPerClick: *big.NewFloat(1.0),
 		IncomeModifier:   *big.NewFloat(1.0),
 		counter:          big.NewFloat(0.0),
+		WindowState:      data.Clicking,
 	}
 }

@@ -4,12 +4,12 @@ import (
 	"errors"
 	"fmt"
 	"github.com/hajimehoshi/ebiten"
+	"github.com/hajimehoshi/ebiten/inpututil"
 	"math/big"
 	"time"
 )
 
 var one = big.NewFloat(1.0)
-var mouseDown = false
 
 func (g *Game) Hook() error {
 
@@ -41,13 +41,10 @@ func (g *Game) PassiveIncome() {
 }
 
 func (g *Game) hookMouseClick() {
-	if !mouseDown && ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
-		mouseDown = true
+
+	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		g.counter.Add(g.counter, one)
 		g.IncomeModifier = *g.IncomeModifier.Add(&g.IncomeModifier, one)
-	}
-	if mouseDown && !ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
-		mouseDown = false
 	}
 }
 
@@ -65,8 +62,7 @@ func (g *Game) hookEsc() error {
 
 func (g *Game) hookA() {
 
-
-	if ebiten.IsKeyPressed(ebiten.KeyA) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyA) {
 		g.Menu()
 	}
 }
