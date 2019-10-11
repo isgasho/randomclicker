@@ -5,6 +5,7 @@ import (
 	"github.com/hajimehoshi/ebiten/examples/resources/fonts"
 	"golang.org/x/image/font"
 	"log"
+	"math/big"
 )
 
 var Counter = 0
@@ -15,6 +16,11 @@ var (
 	BigFont    font.Face
 )
 
+var (
+	Height int
+	Width  int
+)
+
 type WindowState int
 
 const (
@@ -22,7 +28,25 @@ const (
 	Menu
 )
 
+type Item struct {
+	Level             float64
+	BaseValue         float64
+	BaseMultiplier    float64    // mod for inc/sec
+	currentMultiplier float64    // BaseMultiplier ^ Level
+	BasePrice         float64    // base buy price (modded by PriceMultiplier)
+	currentPrice      *big.Float // BasePrice * PriceMultiplier
+	PriceMultiplier   float64
+}
 
+var Items = map[string]Item{
+	"nr1": Item{
+		Level:           0,
+		BaseValue:       2,
+		BaseMultiplier:  1.03,
+		BasePrice:       10,
+		PriceMultiplier: 1.2,
+	},
+}
 
 func init() {
 

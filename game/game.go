@@ -34,15 +34,17 @@ func (g *Game) Menu() error {
 	if err := g.MenuHook(); err != nil {
 		return err
 	}
+
+
+
 	g.Screen.DrawImage(menu, opts)
 	return nil
 }
 
 func (g *Game) Clicking() error {
 
-	if g.Screen != clicking {
-		g.Screen.DrawImage(clicking, opts)
-
+	if g.Screen != Clicking {
+		g.Screen.DrawImage(Clicking, opts)
 	}
 	g.Counter()
 	g.IncomePerSecond()
