@@ -17,22 +17,22 @@ func (g *Game) Display() {
 		clicking = g.Screen
 	}
 	opts := &ebiten.DrawImageOptions{
-		// CompositeMode: ebiten.CompositeModeSourceOut,
+		CompositeMode: ebiten.CompositeModeCopy,
 	}
 
 	// fmt.Printf("%#v\n", g.WindowState)
 	g.Screen.Clear()
+
 	switch g.WindowState {
 	case data.Clicking:
-
 		if g.Screen != clicking {
 			g.Screen.DrawImage(clicking, opts)
-		}
-	case data.Menu:
-		if g.Screen != menu {
 
-			g.Screen.DrawImage(menu, opts)
 		}
+		g.Counter()
+		g.IncomePerSecond()
+	case data.Menu:
+		g.Screen.DrawImage(menu, opts)
 	}
 
 }
@@ -47,18 +47,17 @@ func (g *Game) IncomePerSecond() {
 }
 
 func init() {
-	if menu == nil {
-		fmt.Println("created menu")
+	fmt.Println("created menu")
 
-		image, err := ebiten.NewImage(200, 200, ebiten.FilterDefault)
-		if err != nil {
-			panic(err)
-		}
-
-		image.Fill(color.White)
-		text.Draw(image, "menu:", data.BigFont, 0, 24, color.Black)
-		menu = image
+	image, err := ebiten.NewImage(200, 200, ebiten.FilterDefault)
+	if err != nil {
+		panic(err)
 	}
+
+	image.Fill(color.White)
+
+	text.Draw(image, "menu:", data.NormalFont, 0, 24, color.Black)
+	menu = image
 
 }
 
