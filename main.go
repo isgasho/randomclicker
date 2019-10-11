@@ -25,6 +25,7 @@ func update(screen *ebiten.Image) error {
 		fmt.Printf("%#v\n", screen)
 	}
 
+
 	if err := Game.Hook(); err != nil {
 		return err
 	}

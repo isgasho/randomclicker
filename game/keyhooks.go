@@ -2,7 +2,6 @@ package game
 
 import (
 	"errors"
-	"fmt"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/inpututil"
 	"math/big"
@@ -31,8 +30,9 @@ func (g *Game) PassiveIncome() {
 			select {
 			case <-g.TickerDone:
 				return
-			case t := <-g.Ticker.C:
-				fmt.Println("Tick at", t)
+			case <-g.Ticker.C:
+				// fmt.Println("Tick at", t)
+				// fmt.Printf("%#v\n", g.Screen)
 				g.counter.Add(g.counter, &g.IncomeModifier)
 			}
 		}
@@ -41,7 +41,6 @@ func (g *Game) PassiveIncome() {
 }
 
 func (g *Game) hookMouseClick() {
-
 	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		g.counter.Add(g.counter, one)
 		g.IncomeModifier = *g.IncomeModifier.Add(&g.IncomeModifier, one)
