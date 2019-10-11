@@ -20,10 +20,13 @@ func update(screen *ebiten.Image) error {
 		return nil
 	}
 
+
 	if Game.Screen == nil {
 		Game.Screen = screen
 		fmt.Printf("%#v\n", screen)
 	}
+
+	Game.Display()
 
 
 	if err := Game.Hook(); err != nil {

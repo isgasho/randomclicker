@@ -11,6 +11,32 @@ import (
 var menu *ebiten.Image
 var clicking *ebiten.Image
 
+func (g *Game) Display() {
+
+	if clicking == nil {
+		clicking = g.Screen
+	}
+	opts := &ebiten.DrawImageOptions{
+		// CompositeMode: ebiten.CompositeModeSourceOut,
+	}
+
+	// fmt.Printf("%#v\n", g.WindowState)
+	g.Screen.Clear()
+	switch g.WindowState {
+	case data.Clicking:
+
+		if g.Screen != clicking {
+			g.Screen.DrawImage(clicking, opts)
+		}
+	case data.Menu:
+		if g.Screen != menu {
+
+			g.Screen.DrawImage(menu, opts)
+		}
+	}
+
+}
+
 func (g *Game) Counter() {
 	text.Draw(g.Screen, g.counter.String(), data.SmallFont, 100, 100, color.White)
 }
@@ -20,10 +46,7 @@ func (g *Game) IncomePerSecond() {
 
 }
 
-func (g *Game) Menu() {
-
-	// width, height := g.Screen.Size()
-
+func init() {
 	if menu == nil {
 		fmt.Println("created menu")
 
@@ -32,35 +55,36 @@ func (g *Game) Menu() {
 			panic(err)
 		}
 
-		text.Draw(image, "menu:", data.BigFont, 0, 24, color.Black)
 		image.Fill(color.White)
+		text.Draw(image, "menu:", data.BigFont, 0, 24, color.Black)
 		menu = image
 	}
 
-	if clicking == nil {
-		clicking = g.Screen
-	}
-	// g.Screen.Clear()
-	opts := ebiten.DrawImageOptions{
-		// CompositeMode: ebiten.CompositeModeDestination,
-	}
+}
 
-	fmt.Println("before:" + fmt.Sprintf("\t%s\t%v", g.WindowState, g.Screen))
+func (g *Game) Menu() {
+
+	// width, height := g.Screen.Size()
+
+	// g.Screen.Clear()
+	// opts := ebiten.DrawImageOptions{
+	// 	CompositeMode: ebiten.CompositeModeSourceOut,
+	// }
+
+	// fmt.Println("before:" + fmt.Sprintf("\t%s\t%v", g.WindowState, g.Screen))
 	if g.WindowState == data.Menu {
-		menu = g.Screen
+		// menu = g.Screen
 		g.WindowState = data.Clicking
-		g.Screen.DrawImage(clicking, &opts)
 		// g.Screen = clicking
-		// g.Screen.DrawImage(clicking)
 
 	} else if g.WindowState == data.Clicking {
 		g.WindowState = data.Menu
-		clicking = g.Screen
-		g.Screen.DrawImage(menu, &opts)
+		// clicking = g.Screen
+		// g.Screen.DrawImage(menu, &opts)
 		// g.Screen = menu
 		// ebitenutil.DebugPrint(g.Screen, "reee")
 	}
 
-	fmt.Println("after:" + fmt.Sprintf("\t%s\t%v", g.WindowState, g.Screen))
+	// fmt.Println("after:" + fmt.Sprintf("\t%s\t%v", g.WindowState, g.Screen))
 
 }
