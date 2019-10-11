@@ -21,8 +21,6 @@ var (
 	Width  int
 )
 
-var DidScale bool
-
 type WindowState int
 
 const (

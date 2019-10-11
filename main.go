@@ -20,20 +20,9 @@ func init() {
 
 func update(screen *ebiten.Image) error {
 
-	if !data.DidScale {
-		ebiten.SetScreenSize(data.Width, data.Height)
-		data.DidScale = true
-		return nil
-
-	}
 	if ebiten.IsDrawingSkipped() {
 		return nil
 	}
-
-	// if !data.DidScale {
-	// 	ebiten.SetScreenSize(data.Width, data.Height)
-	// 	data.DidScale = true
-	// }
 
 	// dunno if dis is needed
 	// if Game.Screen == nil {
@@ -51,7 +40,8 @@ func update(screen *ebiten.Image) error {
 func main() {
 	ebiten.SetWindowDecorated(false)
 	data.Width, data.Height = ebiten.ScreenSizeInFullscreen()
-	if err := ebiten.Run(update, 320, 240, 2, "RandomClicker"); err != nil {
+
+	if err := ebiten.Run(update, data.Width, data.Height, 1, "RandomClicker"); err != nil {
 		log.Fatal(err)
 	}
 }
