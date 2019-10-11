@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/hajimehoshi/ebiten"
 	"log"
 	"randomclicker/data"
@@ -26,9 +25,7 @@ func update(screen *ebiten.Image) error {
 
 	// dunno if dis is needed
 	// if Game.Screen == nil {
-	fmt.Printf("%#v\n", screen)
 	// }
-
 	Game.Screen = screen
 	return Game.Display()
 

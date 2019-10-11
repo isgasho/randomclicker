@@ -35,8 +35,6 @@ func (g *Game) Menu() error {
 		return err
 	}
 
-
-
 	g.Screen.DrawImage(menu, opts)
 	return nil
 }
@@ -52,6 +50,18 @@ func (g *Game) Clicking() error {
 		return err
 	}
 	return nil
+}
+
+func (g *Game) CalcIncome() {
+
+	defMod := 1.0
+
+	for _, i := range data.Items {
+		defMod *= i.CurrentMultiplier()
+	}
+
+	g.IncomeModifier = *big.NewFloat(defMod)
+
 }
 
 func (g *Game) PassiveIncome() {

@@ -3,6 +3,7 @@ package game
 import (
 	"fmt"
 	"github.com/hajimehoshi/ebiten"
+	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/hajimehoshi/ebiten/text"
 	"image/color"
 	"randomclicker/data"
@@ -17,7 +18,9 @@ func (g *Game) Display() error {
 		Clicking = g.Screen
 	}
 
-	// g.Screen.Clear()
+	if menu == nil {
+		otherInit()
+	}
 
 	switch g.WindowState {
 	case data.Clicking:
@@ -36,22 +39,39 @@ func (g *Game) IncomePerSecond() {
 	text.Draw(g.Screen, "Income/Sec: "+g.IncomeModifier.String(), data.SmallFont, 0, 30, color.White)
 }
 
-func init() {
-	image, err := ebiten.NewImage(200, 200, ebiten.FilterDefault)
+func otherInit() {
+	image, err := ebiten.NewImage(data.Width, data.Height, ebiten.FilterDefault)
 	if err != nil {
 		panic(err)
 	}
 	image.Fill(color.White)
 
-	counter := 1
+	nextPixel := 30
 
 	for i, v := range data.Items {
-		text.Draw(image, fmt.Sprintf("%s :", i), data.SmallFont, 0, counter*30, color.Black)
-		text.Draw(image, fmt.Sprintf("Price: %.3g ", v.CurrentPrice()), data.SmallFont, 20, counter*60, color.Black)
-		text.Draw(image, fmt.Sprintf("Multiplier: %.3g ", v.CurrentMultiplier()), data.SmallFont, 20, counter*90, color.Black)
-		counter += 3
+		text.Draw(image, fmt.Sprintf("%s :", i), data.SmallFont, 0, nextPixel+30, color.Black)
+		text.Draw(image, fmt.Sprintf("Price: %.3g ", v.CurrentPrice()), data.SmallFont, 20, nextPixel+60, color.Black)
+		text.Draw(image, fmt.Sprintf("Multiplier: %.3g ", v.CurrentMultiplier()), data.SmallFont, 20, nextPixel+90, color.Black)
+
+		topleft := &data.Point{
+			X: 0,
+			Y: nextPixel,
+		}
+
+		nextPixel += 90
+
+		botright := &data.Point{
+			X: 300,
+			Y: nextPixel,
+		}
+
+		v.TopLeft = topleft
+		v.BotRight = botright
+
+		ebitenutil.DrawLine(image, 0, float64(nextPixel+5), 300, float64(nextPixel+5), color.Black)
 	}
 
+	ebitenutil.DrawLine(image, 300, 0, 300, float64(data.Height), color.Black)
 	text.Draw(image, "menu:", data.NormalFont, 0, 24, color.Black)
 	menu = image
 
