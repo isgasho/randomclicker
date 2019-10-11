@@ -9,12 +9,12 @@ import (
 )
 
 var menu *ebiten.Image
-var clicking *ebiten.Image
+var Clicking *ebiten.Image
 
 func (g *Game) Display() error {
 
-	if clicking == nil {
-		clicking = g.Screen
+	if Clicking == nil {
+		Clicking = g.Screen
 	}
 
 	// g.Screen.Clear()

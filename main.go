@@ -23,6 +23,8 @@ func update(screen *ebiten.Image) error {
 	if !data.DidScale {
 		ebiten.SetScreenSize(data.Width, data.Height)
 		data.DidScale = true
+		return nil
+
 	}
 	if ebiten.IsDrawingSkipped() {
 		return nil

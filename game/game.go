@@ -43,8 +43,8 @@ func (g *Game) Menu() error {
 
 func (g *Game) Clicking() error {
 
-	if g.Screen != clicking {
-		g.Screen.DrawImage(clicking, opts)
+	if g.Screen != Clicking {
+		g.Screen.DrawImage(Clicking, opts)
 	}
 	g.Counter()
 	g.IncomePerSecond()
