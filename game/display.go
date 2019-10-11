@@ -10,28 +10,22 @@ import (
 var menu *ebiten.Image
 var clicking *ebiten.Image
 
-func (g *Game) Display() {
+func (g *Game) Display() error {
 
 	if clicking == nil {
 		clicking = g.Screen
 	}
-	opts := &ebiten.DrawImageOptions{
-		CompositeMode: ebiten.CompositeModeCopy,
-	}
+
 
 	g.Screen.Clear()
 
 	switch g.WindowState {
 	case data.Clicking:
-		if g.Screen != clicking {
-			g.Screen.DrawImage(clicking, opts)
-
-		}
-		g.Counter()
-		g.IncomePerSecond()
+		return g.Clicking()
 	case data.Menu:
-		g.Screen.DrawImage(menu, opts)
+		return g.Menu()
 	}
+	return nil
 }
 
 func (g *Game) Counter() {
@@ -53,13 +47,4 @@ func init() {
 	text.Draw(image, "menu:", data.NormalFont, 0, 24, color.Black)
 	menu = image
 
-}
-
-func (g *Game) Menu() {
-	switch g.WindowState {
-	case data.Menu:
-		g.WindowState = data.Clicking
-	case data.Clicking:
-		g.WindowState = data.Menu
-	}
 }

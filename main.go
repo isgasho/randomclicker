@@ -24,13 +24,10 @@ func update(screen *ebiten.Image) error {
 	Game.Screen = screen
 	// }
 
-	Game.Display()
+	return Game.Display()
 
-	if err := Game.Hook(); err != nil {
-		return err
-	}
 
-	return nil
+
 }
 
 func main() {

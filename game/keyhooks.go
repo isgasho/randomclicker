@@ -5,36 +5,32 @@ import (
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/inpututil"
 	"math/big"
-	"time"
+	"randomclicker/data"
 )
 
 var one = big.NewFloat(1.0)
 
-func (g *Game) Hook() error {
-
+func (g *Game) ClickingHook() error {
 	g.hookMouseClick()
-	g.hookA()
-	if err := g.hookEsc(); err != nil {
+	if err := g.defaultHooks(); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (g *Game) PassiveIncome() {
+func (g *Game) MenuHook() error {
+	if err := g.defaultHooks(); err != nil {
+		return err
+	}
+	return nil
+}
 
-	g.Ticker = time.NewTicker(time.Second * 1)
-
-	go func() {
-		for {
-			select {
-			case <-g.TickerDone:
-				return
-			case <-g.Ticker.C:
-				g.counter.Add(g.counter, &g.IncomeModifier)
-			}
-		}
-	}()
-
+func (g *Game) defaultHooks() error {
+	g.hookA()
+	if err := g.hookEsc(); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (g *Game) hookMouseClick() {
@@ -56,6 +52,11 @@ func (g *Game) hookEsc() error {
 
 func (g *Game) hookA() {
 	if inpututil.IsKeyJustPressed(ebiten.KeyA) {
-		g.Menu()
+		switch g.WindowState {
+		case data.Menu:
+			g.WindowState = data.Clicking
+		case data.Clicking:
+			g.WindowState = data.Menu
+		}
 	}
 }
