@@ -17,7 +17,6 @@ func (g *Game) Hook() error {
 	if err := g.hookEsc(); err != nil {
 		return err
 	}
-
 	return nil
 }
 
@@ -31,8 +30,6 @@ func (g *Game) PassiveIncome() {
 			case <-g.TickerDone:
 				return
 			case <-g.Ticker.C:
-				// fmt.Println("Tick at", t)
-				// fmt.Printf("%#v\n", g.Screen)
 				g.counter.Add(g.counter, &g.IncomeModifier)
 			}
 		}
@@ -52,15 +49,12 @@ func (g *Game) hookEsc() error {
 	if ebiten.IsKeyPressed(ebiten.KeyEscape) {
 		// g.TickerDone <- true
 		g.Ticker.Stop()
-
 		return errors.New("closing")
 	}
 	return nil
-
 }
 
 func (g *Game) hookA() {
-
 	if inpututil.IsKeyJustPressed(ebiten.KeyA) {
 		g.Menu()
 	}

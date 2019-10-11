@@ -1,7 +1,6 @@
 package game
 
 import (
-	"fmt"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/text"
 	"image/color"
@@ -20,7 +19,6 @@ func (g *Game) Display() {
 		CompositeMode: ebiten.CompositeModeCopy,
 	}
 
-	// fmt.Printf("%#v\n", g.WindowState)
 	g.Screen.Clear()
 
 	switch g.WindowState {
@@ -34,7 +32,6 @@ func (g *Game) Display() {
 	case data.Menu:
 		g.Screen.DrawImage(menu, opts)
 	}
-
 }
 
 func (g *Game) Counter() {
@@ -43,12 +40,9 @@ func (g *Game) Counter() {
 
 func (g *Game) IncomePerSecond() {
 	text.Draw(g.Screen, "Income/Sec: "+g.IncomeModifier.String(), data.SmallFont, 0, 30, color.White)
-
 }
 
 func init() {
-	fmt.Println("created menu")
-
 	image, err := ebiten.NewImage(200, 200, ebiten.FilterDefault)
 	if err != nil {
 		panic(err)
@@ -62,28 +56,10 @@ func init() {
 }
 
 func (g *Game) Menu() {
-
-	// width, height := g.Screen.Size()
-
-	// g.Screen.Clear()
-	// opts := ebiten.DrawImageOptions{
-	// 	CompositeMode: ebiten.CompositeModeSourceOut,
-	// }
-
-	// fmt.Println("before:" + fmt.Sprintf("\t%s\t%v", g.WindowState, g.Screen))
-	if g.WindowState == data.Menu {
-		// menu = g.Screen
+	switch g.WindowState {
+	case data.Menu:
 		g.WindowState = data.Clicking
-		// g.Screen = clicking
-
-	} else if g.WindowState == data.Clicking {
+	case data.Clicking:
 		g.WindowState = data.Menu
-		// clicking = g.Screen
-		// g.Screen.DrawImage(menu, &opts)
-		// g.Screen = menu
-		// ebitenutil.DebugPrint(g.Screen, "reee")
 	}
-
-	// fmt.Println("after:" + fmt.Sprintf("\t%s\t%v", g.WindowState, g.Screen))
-
 }
