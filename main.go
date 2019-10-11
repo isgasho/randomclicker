@@ -29,11 +29,8 @@ func update(screen *ebiten.Image) error {
 	fmt.Printf("%#v\n", screen)
 	// }
 
-	if data.DidScale {
-		Game.Screen = screen
-		return Game.Display()
-	}
-	return nil
+	Game.Screen = screen
+	return Game.Display()
 
 }
 
